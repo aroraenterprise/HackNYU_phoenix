@@ -1,3 +1,4 @@
+import { AuthEpics } from './auth/auth.epics';
 import { DevToolsExtension, NgRedux, NgReduxModule } from '@angular-redux/store';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
@@ -8,7 +9,8 @@ import { appReducer } from './app.reducer';
 import { AppState } from './app.state';
 
 const Providers = [
-    AppEpics
+    AppEpics,
+    AuthEpics
 ]
 
 @NgModule({

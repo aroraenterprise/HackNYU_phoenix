@@ -1,3 +1,4 @@
+import { AuthActions } from '../../store/auth/auth.actions';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
@@ -17,6 +18,7 @@ export class LoginPage {
 
   loginGithub(){
     console.log('login with github');
+    AuthActions.login();
   }
 
 }
