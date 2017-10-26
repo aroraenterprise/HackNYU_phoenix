@@ -3,6 +3,7 @@
     "auth0": {
         "clientID": "client_id_here",
         "domain": "auth0_domain",
+        "audience": "auth0_audience",        
         "packageIdentifier": "org.hacknyu.app"
     },
     "backendUrl": "http://localhost:8080/api"

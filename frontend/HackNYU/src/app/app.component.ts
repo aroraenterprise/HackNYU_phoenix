@@ -1,3 +1,4 @@
+import { AuthActions } from '../store/auth/auth.actions';
 import { Component } from '@angular/core';
 import Auth0Cordova from '@auth0/cordova';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -10,17 +11,25 @@ import { LoginPage } from '../pages/login/login';
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage:any = LoginPage;
+  rootPage: any = LoginPage;
 
-  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
+  constructor(
+    platform: Platform,
+    statusBar: StatusBar,
+    splashScreen: SplashScreen
+  ) {
     platform.ready().then(() => {
       statusBar.styleDefault();
       splashScreen.hide();
 
-      //handles redirect for Auth0
-      (<any>window).handleOpenURL = (url) => {
-        Auth0Cordova.onRedirectUri(url);
-      };
+      if (platform.is('cordova')) {
+        //handles redirect for Auth0
+        (<any>window).handleOpenURL = (url) => {
+          Auth0Cordova.onRedirectUri(url);
+        };
+      } else {
+        AuthActions.init();
+      }
     });
   }
 }
