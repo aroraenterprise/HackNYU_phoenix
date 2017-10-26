@@ -9,7 +9,10 @@
     "build": "ionic-app-scripts build",
     "lint": "ionic-app-scripts lint",
     "ionic:build": "ionic-app-scripts build",
-    "ionic:serve": "ionic-app-scripts serve"
+    "ionic:serve": "ionic-app-scripts serve",
+    "env:dev": "node ./scripts/replace.env --env=dev",
+    "env:prod": "node ./scripts/replace.env --env=prod",
+    "client-lib": "node ./scripts/build-client-lib"
   },
   "dependencies": {
     "@angular-redux/store": "^6.5.7",

@@ -1,0 +1,9 @@
+{
+    "production": true,
+    "auth0": {
+        "clientID": "client_id_here",
+        "domain": "auth0_domain",
+        "packageIdentifier": "org.hacknyu.app"
+    },
+    "backendUrl": "http://localhost:8080/api"
+}
