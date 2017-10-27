@@ -36,3 +36,11 @@ class Account(Resource):
     @account_ns.marshal_with(account_schema)
     def put(self, account):
         return account_update(account)
+
+
+    @account_ns.doc('delete', id="delete")
+    @login_required
+    @account_ns.marshal_with({}, code=204)
+    def put(self, account):
+        # return account_delete(account)
+        return 204, ''

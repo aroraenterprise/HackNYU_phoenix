@@ -22,5 +22,3 @@ class AccountModel(Model):
     nickname = ndb.StringProperty()
     picture = ndb.StringProperty()
     show_setup = ndb.ComputedProperty(lambda x: x.name is None)
-
-
