@@ -113,8 +113,8 @@ export class AuthEpics {
                         this.auth0.authorize()
                     }
                 })
-                    .map(user => AuthActions.loginComplete())
-                    .catch(err => of(AuthActions.loginComplete()))
+                    .map(account => AuthActions.loginComplete(account))
+                    .catch(err => of(AuthActions.loginComplete(null, err)))
             })
     }
 

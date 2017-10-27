@@ -14,3 +14,24 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+.item {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+button {
+    .spinner {
+        margin-left: -16px;
+        margin-right: 16px;
+        &.light * {
+            stroke: color($colors, light) !important; // fill: color($colors, light) !important;
+        }
+    }
+}
+
+.form-error {
+    text-align: left;
+    margin: 5px 0;
+    font-size: 1em;
+    color: color($colors, danger);
+}

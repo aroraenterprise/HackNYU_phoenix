@@ -1,3 +1,4 @@
+import { AccountSetupPageModule } from '../pages/account-setup/account-setup.module';
 import { NgReduxModule } from '@angular-redux/store';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -15,7 +16,8 @@ import { MyApp } from './app.component';
 const Pages = [
   LoginPageModule,
   ProfilePageModule,
-  SettingsPageModule
+  SettingsPageModule,
+  AccountSetupPageModule
 ]
 
 @NgModule({

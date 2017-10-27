@@ -10,7 +10,9 @@ export const AuthActionTypes = {
     Login: 'Auth_Login',
     LoginComplete: 'Auth_Login_Complete',
     Logout: 'Auth_Logout',
-    LogoutComplete: 'Auth_Logout_Complete'
+    LogoutComplete: 'Auth_Logout_Complete',
+    Update: 'Auth_Update',
+    UpdateComplete: 'Auth_Update_Complete'
 }
 
 export class AuthActions {
@@ -35,6 +37,12 @@ export class AuthActions {
         payload: account,
         error: err,
         hasError: err != null
+    })
+
+    @dispatch()
+    static update = (account: Account): ReduxAction => ({
+        type: AuthActionTypes.Update,
+        payload: account
     })
 
     @dispatch()
