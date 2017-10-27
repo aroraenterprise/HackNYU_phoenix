@@ -74,7 +74,7 @@ export class AuthEpics {
             .switchMap((action: ReduxAction) => {
                 const client = new Auth0Cordova(this.auth0Config);
                 const options = {
-                    scope: 'openid email profile offline_access'
+                    scope: 'openid email'
                 };
                 return new Observable(o => {
                     if (this.platform.is('cordova')) {

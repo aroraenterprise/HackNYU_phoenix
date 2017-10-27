@@ -16,8 +16,7 @@ export class LoginPage {
   ionViewDidLoad() {
   }
 
-  loginGithub(){
-    console.log('login with github');
+  login(){
     AuthActions.login();
   }
 
