@@ -10,7 +10,7 @@ import { Observable } from 'rxjs/Rx';
 import { environment } from '../../environments/environment';
 import { AppState } from '../app.state';
 import { ReduxAction } from '../redux-action';
-import { AuthActions } from './auth.actions';
+import { AuthActions, AuthActionTypes } from './auth.actions';
 
 @Injectable()
 export class AuthEpics {
@@ -21,7 +21,7 @@ export class AuthEpics {
         responseType: 'token id_token',
         audience: environment.auth0.audience,
         redirectUri: location.href,
-        
+
         // needed for auth0cordova
         clientId: environment.auth0.clientID,
         domain: environment.auth0.domain,
@@ -37,28 +37,33 @@ export class AuthEpics {
         private platform: Platform,
         private storage: Storage
     ) {
-        console.log(this.auth0Config);
         this.auth0 = new Auth0.WebAuth(this.auth0Config);
     }
 
     build() {
         return [
-            createEpicMiddleware(this.initEpic()),
+            createEpicMiddleware(this.webInitEpic()),
             createEpicMiddleware(this.loginEpic())
         ]
     }
 
-    private initEpic(): Epic<ReduxAction, AppState> {
+    private webInitEpic(): Epic<ReduxAction, AppState> {
         return (action$, store) => action$
-            .ofType('AuthInit')
+            .ofType(AuthActionTypes.AuthWebInit)
             .switchMap(action => {
-                this.auth0.parseHash((err, authResult) => {
-                    console.log(err, authResult);
+                return new Observable(o => {
+                    this.auth0.parseHash((err, authResult) => {
+                        if (err) {
+                            o.error(err);
+                        } else if (authResult && authResult.idToken) {
+                            this.saveToken(authResult);
+                        } else {
+                            o.next(null);
+                        }
+                    })
                 })
-
-                return of({
-                    type: 'works'
-                })
+                    .map(user => AuthActions.loginComplete())
+                    .catch(err => of(AuthActions.loginComplete()));
             });
 
     }
