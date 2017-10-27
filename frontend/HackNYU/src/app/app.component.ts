@@ -1,11 +1,13 @@
-import { AuthActions } from '../store/auth/auth.actions';
+import { ProfilePage } from '../pages/profile/profile';
+import { getAccount } from '../store/selectors/auth.selectors';
+import { NgRedux } from '@angular-redux/store';
 import { Component } from '@angular/core';
-import Auth0Cordova from '@auth0/cordova';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { Platform } from 'ionic-angular';
 
 import { LoginPage } from '../pages/login/login';
+import { AuthActions } from '../store/auth/auth.actions';
 
 @Component({
   templateUrl: 'app.html'
@@ -16,20 +18,20 @@ export class MyApp {
   constructor(
     platform: Platform,
     statusBar: StatusBar,
-    splashScreen: SplashScreen
+    splashScreen: SplashScreen,
+    redux: NgRedux<any>
   ) {
     platform.ready().then(() => {
       statusBar.styleDefault();
       splashScreen.hide();
-
-      if (platform.is('cordova')) {
-        //handles redirect for Auth0
-        (<any>window).handleOpenURL = (url) => {
-          Auth0Cordova.onRedirectUri(url);
-        };
-      } else {
-        AuthActions.init();
-      }
+      AuthActions.init();
+      getAccount(redux).subscribe(account => {
+        if (account) {
+          this.rootPage = ProfilePage;
+        } else {
+          this.rootPage = LoginPage;
+        }
+      })
     });
   }
 }

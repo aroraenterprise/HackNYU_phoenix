@@ -2,7 +2,8 @@
 
 </ion-content>
 <ion-footer no-border>
-  <button no-margin ion-button block large (click)="login()" icon-right>
-    Get Started <ion-icon name="ios-arrow-dropright"></ion-icon>
-  </button>  
+  <button no-margin ion-button block large (click)="login()" icon-right [disabled]="authLoading$|async">
+    <ion-spinner *ngIf="authLoading$|async"></ion-spinner> Get Started
+    <ion-icon name="ios-arrow-dropright"></ion-icon>
+  </button>
 </ion-footer>

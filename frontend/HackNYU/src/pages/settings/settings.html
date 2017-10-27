@@ -1,0 +1,21 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-buttons left>
+      <button ion-button clear icon-only (click)="dismiss()">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>Settings</ion-title>
+    <ion-buttons right>
+      <button ion-button clear (click)="logout()" [disabled]="authLoading$|async">
+        <ion-spinner *ngIf="authLoading$|async"></ion-spinner> Logout</button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+</ion-content>

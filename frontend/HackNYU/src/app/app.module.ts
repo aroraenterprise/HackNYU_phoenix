@@ -8,12 +8,14 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 
 import { LoginPageModule } from '../pages/login/login.module';
 import { ProfilePageModule } from '../pages/profile/profile.module';
+import { SettingsPageModule } from '../pages/settings/settings.module';
 import { StoreModule } from '../store/store.module';
 import { MyApp } from './app.component';
 
 const Pages = [
   LoginPageModule,
-  ProfilePageModule
+  ProfilePageModule,
+  SettingsPageModule
 ]
 
 @NgModule({
