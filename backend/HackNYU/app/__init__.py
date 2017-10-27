@@ -43,4 +43,7 @@ api = BhApi(blueprint,
 app_ns = Namespace('App', path='/app', description='App details')
 import resources
 
+from account import account_ns
+
 api.add_namespace(app_ns)
+api.add_namespace(account_ns)

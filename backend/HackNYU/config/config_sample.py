@@ -9,3 +9,7 @@ class ConfigDev(object):
     versionCode = 1
     production = True
     support_email = 'email@example.com'
+
+    class Auth0:
+        Domain = 'auth0_domain'
+        ClientID = 'auth0_client_id'
