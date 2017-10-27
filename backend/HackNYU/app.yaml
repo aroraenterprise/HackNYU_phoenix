@@ -1,0 +1,23 @@
+runtime: python27
+api_version: 1
+version: v1
+threadsafe: true
+
+libraries:
+- name: pycrypto
+  version: "2.6.1"
+
+builtins:
+- deferred: on
+
+handlers:
+- url: /_ah/queue/deferred
+  script: google.appengine.ext.deferred.deferred.application
+  login: admin
+
+- url: /app/1/cron.*
+  script: main.app
+  login: admin
+
+- url: /.*
+  script: main.app
