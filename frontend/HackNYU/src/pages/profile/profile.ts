@@ -1,12 +1,12 @@
+import { AccountSetupPage } from '../account-setup/account-setup';
+import { SettingsPage } from '../settings/settings';
+import { NgRedux } from '@angular-redux/store';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, ModalController, NavController, NavParams } from 'ionic-angular';
+import { Observable } from 'rxjs/Rx';
 
-/**
- * Generated class for the ProfilePage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { Account } from '../../client-lib';
+import { getAccount } from '../../store/selectors/auth.selectors';
 
 @IonicPage()
 @Component({
@@ -15,11 +15,25 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class ProfilePage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  account$: Observable<Account> = getAccount(this.redux);
+
+  constructor(
+    public navCtrl: NavController,
+    public modalCtrl: ModalController,
+    public navParams: NavParams,
+    public redux: NgRedux<any>
+  ) {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ProfilePage');
+    this.edit();
   }
 
+  settings() {
+    this.modalCtrl.create(SettingsPage).present();
+  }
+
+  edit() {
+    this.navCtrl.push(AccountSetupPage);
+  }
 }

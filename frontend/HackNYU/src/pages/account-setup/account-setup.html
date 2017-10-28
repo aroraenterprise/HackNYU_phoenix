@@ -1,0 +1,39 @@
+<ion-header no-border>
+  <ion-navbar transparent>
+    <ion-title>Setup Account</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+  <div class="form-wrapper">
+    
+    <form [formGroup]="form">
+      <photo-uploader></photo-uploader>
+      <ion-item>
+        <ion-label stacked>Name</ion-label>
+        <ion-input type="text" formControlName="name"></ion-input>
+      </ion-item>
+      <ak-form-error [form]="form" control="name"></ak-form-error>
+
+      <ion-item>
+        <ion-label stacked>Nickname</ion-label>
+        <ion-input type="text" formControlName="nickname"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label stacked>Email</ion-label>
+        <ion-input type="email" formControlName="email"></ion-input>
+      </ion-item>
+      <ak-form-error [form]="form" control="email"></ak-form-error>
+
+      <!-- <div *ngIf="auth.error">
+        <p class="form-error">{{auth.error.message}}</p>
+      </div> -->
+    </form>
+  </div>
+</ion-content>
+<ion-footer>
+  <button no-margin block ion-button large [disabled]="accountLoading$ | async" (click)="updateAccount()">
+    <ion-spinner class="light" *ngIf="accountLoading$ | async"></ion-spinner> Save Profile</button>
+</ion-footer>

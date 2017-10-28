@@ -30,6 +30,8 @@ plugins/ios.json
 www/
 $RECYCLE.BIN/
 
+src/client-lib/*
+
 src/environments/environment.ts
 env/environment.prod*
 env/environment.dev*

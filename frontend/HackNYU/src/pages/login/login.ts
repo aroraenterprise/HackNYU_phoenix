@@ -1,6 +1,10 @@
-import { AuthActions } from '../../store/auth/auth.actions';
+import { NgRedux } from '@angular-redux/store';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Observable } from 'rxjs/Rx';
+
+import { AuthActions } from '../../store/auth/auth.actions';
+import { getAuth } from '../../store/selectors/auth.selectors';
 
 
 @IonicPage()
@@ -9,15 +13,19 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'login.html',
 })
 export class LoginPage {
+  authLoading$: Observable<boolean> = getAuth(this.redux, ['loading']);
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public redux: NgRedux<any>
+  ) {
   }
 
   ionViewDidLoad() {
   }
 
-  loginGithub(){
-    console.log('login with github');
+  login() {
     AuthActions.login();
   }
 

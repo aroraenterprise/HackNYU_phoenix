@@ -1,13 +1,9 @@
-<ion-header>
-
-  <ion-navbar>
-    <ion-title>Login</ion-title>
-  </ion-navbar>
-
-</ion-header>
-
-
 <ion-content padding>
 
-  <button ion-button block (click)="loginGithub()">Github</button>
 </ion-content>
+<ion-footer no-border>
+  <button no-margin ion-button block large (click)="login()" icon-right [disabled]="authLoading$|async">
+    <ion-spinner class="light" *ngIf="authLoading$|async"></ion-spinner> Get Started
+    <ion-icon name="ios-arrow-dropright"></ion-icon>
+  </button>
+</ion-footer>

@@ -17,7 +17,7 @@ var content = fs.readFileSync(envFile);
 console.log('Writing Env: ' + env + ' variables to file.')
 const contentToWrite = "export const environment = " + content.toString();
 
-var wstream = fs.writeFile('./src/environments/environment.ts', contentToWrite, { flag: 'wx' }, (err) => {
+var wstream = fs.writeFile('./src/environments/environment.ts', contentToWrite, { flag: 'w' }, (err) => {
     if (err) {
         console.log('ERROR: ' + err.message)
     } else {

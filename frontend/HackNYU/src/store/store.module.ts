@@ -1,3 +1,5 @@
+import { environment } from '../environments/environment';
+import { ApiModule, BASE_PATH } from '../client-lib';
 import { AuthEpics } from './auth/auth.epics';
 import { DevToolsExtension, NgRedux, NgReduxModule } from '@angular-redux/store';
 import { ModuleWithProviders, NgModule } from '@angular/core';
@@ -9,6 +11,10 @@ import { appReducer } from './app.reducer';
 import { AppState } from './app.state';
 
 const Providers = [
+    {
+        provide: BASE_PATH,
+        useValue: environment.backendUrl
+    },
     AppEpics,
     AuthEpics
 ]
@@ -16,7 +22,8 @@ const Providers = [
 @NgModule({
     imports: [
         HttpModule,
-        NgReduxModule
+        NgReduxModule,
+        ApiModule,        
     ]
 })
 export class StoreModule {
