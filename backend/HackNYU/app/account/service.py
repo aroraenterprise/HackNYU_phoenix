@@ -21,8 +21,7 @@ def account_update(
         name,
         nickname=None,
         email=None,
-        picture=None
-):
+        picture=None):
     nickname = nickname or name
     account.populate(**{
         'name': name,
