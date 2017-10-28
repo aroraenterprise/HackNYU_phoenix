@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "hacknyu-phoenix-dev",
+  "private_key_id": "d98bcbf45289d3eed7fb670c53f97a561616e4db",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQDCTpx06+SJNnE4\nv5rk9UtijygK8WUC8E6/gXacLlaVd7C8c7l6XKBT6W5HeBrywVF/33VNVjfP8O3k\nm3m6lPnz3IQHG+CWsUmhuU7vGnPHMpkR+mEo01UBP9vzNeZejwtZ9YWlf4IlCWlu\n2LxxZ1mJJEIKwm5DBRi8IUfbTg5xG0AniuUrBYl7iTeF27BfxrbR+4WMvLk10neb\nmWJrjVACMKu6/pCWXaruoiCSQlaR2OCf7aeLrhFbOEvWS36SgL0HhPaZmIQUJC51\n9hN0CL9pebbNa6OSHs1Zekf+qrD6iZKq9xlk6mVsM7zPlvAuK3fNv9DhtOIoCDwQ\nfMvLijBXAgMBAAECggEAMcGLku0s8m38hDmcYnDlwvFBobu60AvVPnjadJfxGAk0\nOq2vm0PI0nP+B1McI3mZcxM3qHwhgqABav7dJwgrEWUwcdmTo0L2xfD744J0j1fH\nlrD03E1xgQZnPlpZCXG7yGd0t7J1EyLb2sSpTKjYZqPgPX0YWxUdBl/HVMMiM5gC\nRbKvsre9vBlmbJywxuTncG/ylLYFWW02ZIKhfPh2dq19hej2LtVDMigZxnneU/7u\nitef9olMam3wz16k6yeVzozfWsBrgikgqCUkqA8J88SDHL9HyLfvZUtY1pu7UBEi\n6SlJKiUpg3uWFoSmKjJWz1AkDtJT1dTyjjzB0na3MQKBgQDwNUocAoA+rdxV2gfE\nbG5aVySHqlg0s4ZvzTy7MQSkI8gB/UFWwQXFsCqAtdU9HkdpAKYY/EjrOyrwQRoc\n3zV+hIdUmbaVqWTyQEKoCt+76SYoglcEqWfCcWjhIa2fkcsXXNZ+ElAqky76dly8\n/8CCKivWd0byR2coP1/DAx8HhQKBgQDPFM4U4/H9Cem9HxLHf7Dcx5wIdfxEkh9e\nRcIQlPaDD57QMQZasc8X3fp6Yyin3nO+UJBmWNN0WqeADSmBhjGxjwA6Ppy7s85a\n6a0AH4wDy0eVOuekff/N9ibY95VmaPNmT39NIxhb2TciyReXqid1YoyS+diGZ+TF\nTKeDYSNJKwKBgQCI4qVX7ujsTyGn3vbcLbp5Sv2rPhzD86Zh4gCA4D831pgs4gix\nCpBihrDB5l0dVjr1kIQW6vYW7wHaJg9ecqjGb3m7cVlGUmEPWCVkI8Y6DHRNU3GJ\nW4yglwZgfVO3AltM9f/ZmlAK4xM7ceYJYmlvA981eYV5nc0gd3T36bhuDQKBgQCe\n7GCcN7PndkwkEEzhPmYFikt9Us8f8OSR/QdKooftXXeMX5N41y0QLBOnCaKR8m7x\nh/LKGTFvAoO6Cl/oP4yzsAOEr7ipdPzRWLSke5GA9+kf5e0QmIJRFrAJozjNN45U\n3n3cPSrckn91+s5YXwWZWOB5i7VYsTMpGAMXGN1zsQKBgQC+B6QgsUyMP4iA5cSe\nK/VCSrDfKOzKtk5CEQZYxJfl1ITcdLdGAwHw1M3PbxQ+lPI3I4yRjeqoGXE5vB25\neDeXDZGWRDIYup+KPhOKUlFyNC3BdGJNR54LosEGFdKwS8lZVtVu9jSxXtUtS0MY\nIktBbcrsfe2ElIKNU4dij54nYg==\n-----END PRIVATE KEY-----\n",
+  "client_email": "storage-appengine@hacknyu-phoenix-dev.iam.gserviceaccount.com",
+  "client_id": "115740175424555852532",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://accounts.google.com/o/oauth2/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/storage-appengine%40hacknyu-phoenix-dev.iam.gserviceaccount.com"
+}

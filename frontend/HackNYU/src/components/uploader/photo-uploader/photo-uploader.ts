@@ -1,3 +1,4 @@
+import { Uploader } from '../uploader';
 import { ActionSheetController } from 'ionic-angular';
 import { Component, Input, OnInit } from '@angular/core';
 import { ControlValueAccessor } from '@angular/forms';
@@ -27,7 +28,8 @@ export class PhotoUploaderComponent implements ControlValueAccessor, OnInit {
 
   constructor(
     private actionSheetCtrl: ActionSheetController,
-    private cameraSvc: Camera
+    private cameraSvc: Camera,
+    private uploader: Uploader
   ) {
   }
 
@@ -58,30 +60,39 @@ export class PhotoUploaderComponent implements ControlValueAccessor, OnInit {
 
   takePhoto() {
     //ask where the photo is coming from
-    let actionSheet = this.actionSheetCtrl.create({
-      title: 'Upload picture',
-      buttons: [
-        {
-          text: 'Pick from Gallery',
-          handler: () => {
-            this.pictureOpt.sourceType = PictureSourceType.PHOTOLIBRARY
-            this.capturePhoto();
-          }
-        },
-        {
-          text: 'Take Photo',
-          handler: () => {
-            this.pictureOpt.sourceType = PictureSourceType.CAMERA
-            this.capturePhoto();
-          }
-        },
-        {
-          text: 'Cancel',
-          role: 'cancel'
-        }
-      ]
-    });
-    actionSheet.present();
+    this.uploader.uploadPhoto({
+      filename: 'test.jpg',
+      contentType: 'image/jpeg',
+      data: {
+        alt: 'this is a test'
+      }
+    }).subscribe(()=>{
+
+    })
+    // let actionSheet = this.actionSheetCtrl.create({
+    //   title: 'Upload picture',
+    //   buttons: [
+    //     {
+    //       text: 'Pick from Gallery',
+    //       handler: () => {
+    //         this.pictureOpt.sourceType = PictureSourceType.PHOTOLIBRARY
+    //         this.capturePhoto();
+    //       }
+    //     },
+    //     {
+    //       text: 'Take Photo',
+    //       handler: () => {
+    //         this.pictureOpt.sourceType = PictureSourceType.CAMERA
+    //         this.capturePhoto();
+    //       }
+    //     },
+    //     {
+    //       text: 'Cancel',
+    //       role: 'cancel'
+    //     }
+    //   ]
+    // });
+    // actionSheet.present();
   }
 
   capturePhoto() {

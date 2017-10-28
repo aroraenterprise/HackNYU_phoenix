@@ -12,25 +12,72 @@ Date: 2017-06-15
 Description:
 """
 import logging
+import re
 
+from google.appengine.ext import ndb
+
+from extensions.bh_api import bh_abort
 from flask import request
 from flask_restplus import abort, marshal, marshal_with
 from flask_restplus.reqparse import RequestParser
 from functools32 import wraps
 
+class ModelByIdError(object):
+    def __init__(self, not_found_token, not_found_string=None):
+        self.not_found_token = not_found_token
+        self.not_found_string = not_found_string
 
-def get_model_by_id(Model, modelName, idStub=None):
+
+def get_model_by_id(Model, return_token, model_by_id_error, id_stub=None, parent_key=None):
+    """
+    :param Model: 
+    :param model_by_id_error: ModelByIdError
+    :param id_stub: 
+    :return: 
+    """
+    id_stub = id_stub or 'id'
     def decorator(f):
         @wraps(f)
         def wrapped_func(*args, **kwargs):
-            if not (idStub or 'id') in kwargs:
-                abort(400, 'Missing %s id.' % modelName)
-            id = kwargs.pop(idStub or 'id')
-            model = Model.get_by_id(id)
+            if id_stub not in kwargs:
+                raise Exception("The decorated resource does not have a key/value pair for `%s`" % id_stub)
+            id = kwargs.pop(id_stub)
+            parent = None
+            if parent_key and parent_key in kwargs:
+                parent = kwargs.get(parent_key)
+
+            model = Model.get_by_id(id, parent=parent.key if parent else None)
             if not model or not model.valid:
-                abort(404, message='%s not found.' % modelName)
+                return bh_abort(404, model_by_id_error.not_found_token, model_by_id_error.not_found_string)
             kwargs.update({
-                modelName: model
+                return_token: model
+            })
+            return f(*args, **kwargs)
+        return wrapped_func
+    return decorator
+
+
+
+def get_model_by_key(Model, return_token, model_by_id_error, key_stub=None):
+    """
+    :param Model: 
+    :param model_by_id_error: ModelByIdError
+    :param key_stub: 
+    :return: 
+    """
+    key_stub = key_stub or 'key'
+    def decorator(f):
+        @wraps(f)
+        def wrapped_func(*args, **kwargs):
+            if key_stub not in kwargs:
+                raise Exception("The decorated resource does not have a key/value pair for `%s`" % key_stub)
+            key = kwargs.pop(key_stub)
+
+            model = ndb.Key(urlsafe=key).get()
+            if not model or not isinstance(model, Model) or not model.valid:
+                return bh_abort(404, model_by_id_error.not_found_token, model_by_id_error.not_found_string)
+            kwargs.update({
+                return_token: model
             })
             return f(*args, **kwargs)
         return wrapped_func
@@ -46,8 +93,11 @@ def parse_params(params):
             else:
                 data = marshal(request.get_json(), params)
             data.update(**kwargs)
+            kwargs = {}
+            for k, v in data.iteritems():
+                kwargs[re.sub('([a-z0-9])([A-Z])', r'\1_\2', k).lower()] = v
             # try:
-            return f(*args, **data)
+            return f(*args, **kwargs)
             # except TypeError as e:
             #     logging.error(e.message)
             #     if isinstance(params, RequestParser):

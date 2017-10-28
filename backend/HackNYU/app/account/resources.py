@@ -13,7 +13,7 @@ Description:
 """
 from app.account import account_ns
 from app.account.decorators import login_required
-from app.account.service import account_update
+import service as account_service
 from app.parameters.account import account_param
 from app.schemas.account import account_schema
 from flask_restplus import Resource
@@ -35,7 +35,7 @@ class Account(Resource):
     @account_ns.expect(account_param)
     @account_ns.marshal_with(account_schema)
     def put(self, account):
-        return account_update(account)
+        return account_service.update(account)
 
 
     @account_ns.doc('delete', id="delete")

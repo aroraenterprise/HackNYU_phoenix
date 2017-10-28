@@ -16,7 +16,7 @@ from extensions.decorators import parse_params
 
 
 @parse_params(account_param)
-def account_update(
+def update(
         account,
         name,
         nickname=None,
