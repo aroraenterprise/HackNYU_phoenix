@@ -46,6 +46,7 @@ export class AuthEpics {
         return [
             createEpicMiddleware(this.initEpic()),
             createEpicMiddleware(this.loginEpic()),
+            createEpicMiddleware(this.updateEpic()),
             createEpicMiddleware(this.logoutEpic())
         ]
     }
@@ -81,6 +82,8 @@ export class AuthEpics {
                                             o.next(null);
                                         }
                                     })
+                                } else {
+                                    o.next(null);
                                 }
                             }
                         }, err => o.error(err));
@@ -118,6 +121,16 @@ export class AuthEpics {
             })
     }
 
+    private updateEpic(): Epic<ReduxAction, AppState> {
+        return (action$, store) => action$
+            .ofType(AuthActionTypes.Update)
+            .switchMap((action: ReduxAction) => {
+                return this.accountSvc.update(action.payload)
+                    .map((account) => AuthActions.updateComplete(account))
+                    .catch(err => of(AuthActions.updateComplete(null, err)))
+            })
+    }
+
     private logoutEpic(): Epic<ReduxAction, AppState> {
         return (action$, store) => action$
             .ofType(AuthActionTypes.Logout)
@@ -131,7 +144,7 @@ export class AuthEpics {
             })
     }
 
-    private fetchAccount(token, subscriber: Subscriber<Account>){
+    private fetchAccount(token, subscriber: Subscriber<Account>) {
         this.accountSvc.configuration.apiKeys = { 'X-API-KEY': 'Bearer ' + token };
         this.accountSvc.authenticate()
             .subscribe(account => {

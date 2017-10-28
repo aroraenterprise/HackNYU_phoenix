@@ -1,13 +1,14 @@
-import { AuthActions } from '../../store/auth/auth.actions';
-import { Subscription } from 'rxjs/Rx';
 import { NgRedux } from '@angular-redux/store';
 import { Component } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Subscription } from 'rxjs/Rx';
 
 import { AkFormControl } from '../../components/ak-form/models/ak-form-control';
 import { AkFormGroup } from '../../components/ak-form/models/ak-form-group';
+import { AuthActions } from '../../store/auth/auth.actions';
 import { getAccount } from '../../store/selectors/auth.selectors';
+import { sanitizeData } from '../../util';
 
 @IonicPage()
 @Component({
@@ -30,7 +31,8 @@ export class AccountSetupPage {
 
   ionViewDidLoad() {
     this.sub = this.account$.subscribe((account)=>{
-      this.form.patchValue(account);
+      if (account)
+        this.form.patchValue(account);
     })
   }
 
@@ -65,7 +67,7 @@ export class AccountSetupPage {
       this.form.setShowError(true);
       return;
     } else {
-      AuthActions.update(this.form.value);
+      AuthActions.update(sanitizeData(this.form.value));
     }
   }
 

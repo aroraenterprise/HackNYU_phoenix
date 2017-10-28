@@ -45,6 +45,13 @@ export class AuthActions {
         payload: account
     })
 
+    static updateComplete = (account?: Account, err?: any): ReduxAction => ({
+        type: AuthActionTypes.UpdateComplete,
+        payload: account,
+        error: err,
+        hasError: err != null
+    })
+
     @dispatch()
     static logout = (): ReduxAction => ({
         type: AuthActionTypes.Logout

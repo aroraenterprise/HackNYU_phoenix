@@ -1,3 +1,4 @@
+import { AccountSetupPage } from '../account-setup/account-setup';
 import { SettingsPage } from '../settings/settings';
 import { NgRedux } from '@angular-redux/store';
 import { Component } from '@angular/core';
@@ -25,10 +26,14 @@ export class ProfilePage {
   }
 
   ionViewDidLoad() {
-
+    this.edit();
   }
 
   settings() {
     this.modalCtrl.create(SettingsPage).present();
+  }
+
+  edit() {
+    this.navCtrl.push(AccountSetupPage);
   }
 }
