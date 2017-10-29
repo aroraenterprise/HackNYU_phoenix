@@ -1,5 +1,6 @@
+import { Account } from '../../client-lib';
 
 export interface AuthState {
-    account?: {};
+    account?: Account;
     loading?: boolean;
 }
