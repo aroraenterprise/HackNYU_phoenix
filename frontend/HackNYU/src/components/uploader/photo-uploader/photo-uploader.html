@@ -1,9 +1,9 @@
 <div class="photo-item" (tap)="takePhoto()">
-    <ion-icon name="camera" class="camera" [class.overlay]="selectedImage && selectedImage.url != null"></ion-icon>
-    <img *ngIf="selectedImage && selectedImage.url" [src]="selectedImage.url">
+    <ion-icon name="camera" class="camera" [class.overlay]="currentImage && currentImage.url != null"></ion-icon>
+    <img *ngIf="currentImage && currentImage.url" [src]="currentImage.url">
 
-    <div class="uploader" *ngIf="showUpload">
-        <ion-icon class="fa-spin icon-circle-o-notch"></ion-icon>
-        <ion-icon class="icon-upload"></ion-icon>
+    <div class="uploader" *ngIf="isUploading">
+        <ion-spinner class="light"></ion-spinner>
+        <ion-icon color="light" name="cloud-upload"></ion-icon>
     </div>
 </div>
