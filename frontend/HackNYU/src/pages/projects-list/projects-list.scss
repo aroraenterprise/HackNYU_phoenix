@@ -1,0 +1,30 @@
+page-projects-list {
+    ion-card {
+        position: relative;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 200px;
+        img {
+            position: absolute;
+            object-fit: cover;
+            height: 100%;
+            width: 100%;
+            object-position: center;
+        }
+        .content {
+            background: rgba(color($colors, dark), 0.8);
+            z-index: 10;
+            .card-title {
+                font-size: 2.0em;
+                font-weight: bold;
+                color: color($colors, light);
+            }
+            .card-subtitle {
+                font-size: 1.0em;
+                color: color($colors, light);
+            }
+        }
+    }
+}

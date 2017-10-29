@@ -1,4 +1,3 @@
-import { AccountSetupPageModule } from '../pages/account-setup/account-setup.module';
 import { NgReduxModule } from '@angular-redux/store';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -7,14 +6,21 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { IonicStorageModule } from '@ionic/storage';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 
+import { AccountSetupPageModule } from '../pages/account-setup/account-setup.module';
 import { LoginPageModule } from '../pages/login/login.module';
 import { ProfilePageModule } from '../pages/profile/profile.module';
+import { ProjectViewPageModule } from '../pages/project-view/project-view.module';
+import { ProjectsListPageModule } from '../pages/projects-list/projects-list.module';
 import { SettingsPageModule } from '../pages/settings/settings.module';
+import { TabsPageModule } from '../pages/tabs/tabs.module';
 import { StoreModule } from '../store/store.module';
 import { MyApp } from './app.component';
 
 const Pages = [
   LoginPageModule,
+  TabsPageModule,
+  ProjectsListPageModule,
+  ProjectViewPageModule,
   ProfilePageModule,
   SettingsPageModule,
   AccountSetupPageModule
@@ -27,7 +33,7 @@ const Pages = [
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
-    IonicStorageModule.forRoot(),    
+    IonicStorageModule.forRoot(),
     NgReduxModule,
     StoreModule.forRoot(),
     ...Pages
@@ -39,7 +45,7 @@ const Pages = [
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]
 })
-export class AppModule {}
+export class AppModule { }

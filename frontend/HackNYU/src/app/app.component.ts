@@ -1,4 +1,3 @@
-import { AuthState } from '../store/auth/auth.state';
 import { NgRedux } from '@angular-redux/store';
 import { Component, ViewChild } from '@angular/core';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -7,9 +6,10 @@ import { ModalController, Nav, Platform } from 'ionic-angular';
 
 import { AccountSetupPage } from '../pages/account-setup/account-setup';
 import { LoginPage } from '../pages/login/login';
-import { ProfilePage } from '../pages/profile/profile';
+import { TabsPage } from '../pages/tabs/tabs';
 import { AuthActions } from '../store/auth/auth.actions';
-import { getAccount, getAuth } from '../store/selectors/auth.selectors';
+import { AuthState } from '../store/auth/auth.state';
+import { getAuth } from '../store/selectors/auth.selectors';
 
 @Component({
   template: '<ion-nav [root]="rootPage"></ion-nav>'
@@ -39,7 +39,7 @@ export class MyApp {
           this.nav.setRoot(LoginPage);
         } else if (!this.isLoggedIn) {
           this.isLoggedIn = true;
-          this.nav.setRoot(auth.account.showSetup ? AccountSetupPage : ProfilePage);
+          this.nav.setRoot(auth.account.showSetup ? AccountSetupPage : TabsPage);
         }
       })
     });
