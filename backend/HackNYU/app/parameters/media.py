@@ -8,3 +8,7 @@ media_upload_param = app_ns.model('MediaUploadParam', {
     'isPublic': fields.Boolean(default=False),
     'data': fields.Raw(),
 })
+
+media_id_param = app_ns.model('MediaIdParam', {
+    'id': fields.Integer(required=True),
+})

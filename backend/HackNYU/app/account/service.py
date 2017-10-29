@@ -11,6 +11,8 @@ Author: sajarora
 Date: 2017-10-27
 Description:
 """
+from google.appengine.ext import ndb
+
 from app.parameters.account import account_param
 from extensions.decorators import parse_params
 
@@ -23,11 +25,17 @@ def update(
         email=None,
         picture=None):
     nickname = nickname or name
+
+    # parse picture key if one is present
+    picture_key = None
+    if picture:
+        picture_key = ndb.Key('MediaModel', picture.get('id'))
+
     account.populate(**{
         'name': name,
         'nickname': nickname,
         'email': email,
-        'picture': picture
+        'picture_key': picture_key
     })
     account.put()
     return account

@@ -30,6 +30,6 @@ def get_signed_url(resource_path, expiration):
         'Signature': signature,
     }
 
-    return '{endpoint}{resource}?{querystring}'.format(
+    return '{endpoint}/{resource}?{querystring}'.format(
         endpoint=config.Google.storage_url, resource=resource_path,
         querystring=urlencode(query_params))

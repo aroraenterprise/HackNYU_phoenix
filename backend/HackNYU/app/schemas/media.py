@@ -16,7 +16,7 @@ media_upload_schema = app_ns.model('MediaUpload', {
     'key': fields.String(),
     'url': fields.String(),
     'bucket': fields.String(),
-    'mediaType': fields.String(),
+    'contentType': fields.String(),
     'googleAccessId': fields.String(),
     'acl': fields.String(),
     'signature': fields.String(),
