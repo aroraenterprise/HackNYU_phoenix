@@ -3,7 +3,7 @@
     <name>HackNYU</name>
     <description>Build ideas into reality</description>
     <author email="hacknyu.phoenix@gmail.com" href="http://hacknyu.org">Saj Arora</author>
-    <content original-src="index.html" src="http://192.168.1.107:8100" />
+    <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
@@ -82,7 +82,6 @@
     <allow-navigation href="http://192.168.1.114:8100" />
     <allow-navigation href="http://192.168.1.107:8100" />
     <engine name="android" spec="^6.3.0" />
-    <plugin name="cordova-plugin-camera" spec="^2.4.1" />
     <plugin name="cordova-plugin-customurlscheme" spec="^4.3.0">
         <variable name="URL_SCHEME" value="org.hacknyu.app" />
         <variable name="ANDROID_SCHEME" value="org.hacknyu.app" />
@@ -90,8 +89,6 @@
         <variable name="ANDROID_PATHPREFIX" value="/cordova/org.hacknyu.app/callback" />
     </plugin>
     <plugin name="cordova-plugin-device" spec="^1.1.6" />
-    <plugin name="cordova-plugin-file" spec="^4.3.3" />
-    <plugin name="cordova-plugin-file-transfer" spec="^1.6.3" />
     <plugin name="cordova-plugin-ionic-webview" spec="^1.1.16" />
     <plugin name="cordova-plugin-safariviewcontroller" spec="^1.4.7" />
     <plugin name="cordova-plugin-splashscreen" spec="^4.0.3" />

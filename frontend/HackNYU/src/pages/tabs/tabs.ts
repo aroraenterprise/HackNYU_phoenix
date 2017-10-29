@@ -1,8 +1,8 @@
-import { ProjectsListPage } from '../projects-list/projects-list';
-import { ProfilePage } from '../profile/profile';
-import { ProjectViewPage } from '../project-view/project-view';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+
+import { ProfilePage } from '../profile/profile';
+import { ProjectsListPage } from '../projects-list/projects-list';
 
 
 @IonicPage()
@@ -16,7 +16,10 @@ export class TabsPage {
   projects = ProjectsListPage;
   profile = ProfilePage;
   
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(
+    public navCtrl: NavController, 
+    public navParams: NavParams
+  ) {
   }
 
   ionViewDidLoad() {

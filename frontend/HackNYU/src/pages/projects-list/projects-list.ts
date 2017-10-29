@@ -1,6 +1,7 @@
-import { ProjectViewPage } from '../project-view/project-view';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+
+import { ProjectViewPage } from '../project-view/project-view';
 
 
 @IonicPage()
@@ -24,6 +25,7 @@ export class ProjectsListPage {
   }
 
   ionViewDidLoad() {
+    this.viewProject();
   }
 
   viewProject(){

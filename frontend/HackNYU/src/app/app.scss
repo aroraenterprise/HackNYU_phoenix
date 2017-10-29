@@ -12,6 +12,8 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+@import './partials/markdown';
+
 .item {
     padding-left: 0;
     padding-right: 0;
@@ -30,4 +32,8 @@
     margin: 5px 0;
     font-size: 1em;
     color: color($colors, danger);
+}
+
+.fab-close-icon {
+    margin-top: 20px;
 }

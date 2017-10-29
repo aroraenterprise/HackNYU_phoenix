@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-buttons left>
+      <button ion-button icon-only (click)="dismiss()">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>Text Editor</ion-title>
+  </ion-navbar>
+  <ion-toolbar class="segment-toolbar" color="primary" no-padding>
+    <ion-segment [(ngModel)]="selectedTab" color="light">
+      <ion-segment-button [value]="Tabs.Markdown">Editor</ion-segment-button>
+      <ion-segment-button [value]="Tabs.Preview">Preview</ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <div [hidden]="selectedTab !== Tabs.Markdown">
+    <ion-textarea autoresize [formControl]="markdownText" placeholder="Start writing your markdown..."></ion-textarea>
+  </div>
+
+  <markdown-html [hidden]="selectedTab !== Tabs.Preview" [content]="markdownText.value"></markdown-html>
+</ion-content>

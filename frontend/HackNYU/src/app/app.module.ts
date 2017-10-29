@@ -13,6 +13,7 @@ import { ProjectViewPageModule } from '../pages/project-view/project-view.module
 import { ProjectsListPageModule } from '../pages/projects-list/projects-list.module';
 import { SettingsPageModule } from '../pages/settings/settings.module';
 import { TabsPageModule } from '../pages/tabs/tabs.module';
+import { TextEditorPageModule } from '../pages/text-editor/text-editor.module';
 import { StoreModule } from '../store/store.module';
 import { MyApp } from './app.component';
 
@@ -23,7 +24,8 @@ const Pages = [
   ProjectViewPageModule,
   ProfilePageModule,
   SettingsPageModule,
-  AccountSetupPageModule
+  AccountSetupPageModule,
+  TextEditorPageModule
 ]
 
 @NgModule({
