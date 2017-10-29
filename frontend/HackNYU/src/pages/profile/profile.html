@@ -15,9 +15,12 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content>
   <div *ngIf="account$ | async; let account">
-    <img [src]="account.picture">
-    <h1>{{account.name}}</h1>
+    <img class="photo" *ngIf="account.picture" [src]="account.picture.url">
+    <div padding>
+      <h1>{{account.nickname}}</h1>
+      <p>{{account.email}}</p>
+    </div>
   </div>
 </ion-content>

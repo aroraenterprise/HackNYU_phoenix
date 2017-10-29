@@ -1,14 +1,17 @@
-import { environment } from '../environments/environment';
-import { ApiModule, BASE_PATH } from '../client-lib';
-import { AuthEpics } from './auth/auth.epics';
 import { DevToolsExtension, NgRedux, NgReduxModule } from '@angular-redux/store';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import { createLogger } from 'redux-logger';
 
+import { ApiModule, BASE_PATH } from '../client-lib';
+import { environment } from '../environments/environment';
 import { AppEpics } from './app.epics';
 import { appReducer } from './app.reducer';
 import { AppState } from './app.state';
+import { AuthEpics } from './auth/auth.epics';
+import { ConfigFactory } from './config-factory';
+
+
 
 const Providers = [
     {
@@ -23,7 +26,7 @@ const Providers = [
     imports: [
         HttpModule,
         NgReduxModule,
-        ApiModule,        
+        ApiModule.forConfig(ConfigFactory),
     ]
 })
 export class StoreModule {

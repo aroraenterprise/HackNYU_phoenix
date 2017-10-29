@@ -30,13 +30,12 @@ export class AuthEpics {
         packageIdentifier: environment.auth0.packageIdentifier
     };
     auth0: Auth0.WebAuth;
-    readonly KeyExpiry = 'auth.expiry';
-    readonly KeyIdToken = 'auth.idToken';
+    static readonly KeyExpiry = 'auth.expiry';
+    static readonly KeyIdToken = 'auth.idToken';
 
 
     constructor(
         private platform: Platform,
-        private storage: Storage,
         private accountSvc: AccountService
     ) {
         this.auth0 = new Auth0.WebAuth(this.auth0Config);
@@ -64,29 +63,27 @@ export class AuthEpics {
 
                 return new Observable<Account>(o => {
                     //first see if there is local storage with the token
-                    this.getToken()
-                        .then(token => {
-                            if (token) {
-                                this.fetchAccount(token, o);
-                            } else {
-                                // no token found...if its not cordova check to make sure that there isn't a token
-                                // in hash
-                                if (!this.platform.is('cordova')) {
-                                    this.auth0.parseHash((err, authResult) => {
-                                        if (err) {
-                                            o.error(err);
-                                        } else if (authResult && authResult.idToken) {
-                                            this.saveToken(authResult);
-                                            this.fetchAccount(authResult.idToken, o);
-                                        } else {
-                                            o.next(null);
-                                        }
-                                    })
+                    const token = this.getToken()
+                    if (token) {
+                        this.fetchAccount(token, o);
+                    } else {
+                        // no token found...if its not cordova check to make sure that there isn't a token
+                        // in hash
+                        if (!this.platform.is('cordova')) {
+                            this.auth0.parseHash((err, authResult) => {
+                                if (err) {
+                                    o.error(err);
+                                } else if (authResult && authResult.idToken) {
+                                    this.saveToken(authResult);
+                                    this.fetchAccount(authResult.idToken, o);
                                 } else {
                                     o.next(null);
                                 }
-                            }
-                        }, err => o.error(err));
+                            })
+                        } else {
+                            o.next(null);
+                        }
+                    }
                 })
                     .map(account => AuthActions.initComplete(account))
                     .catch(err => of(AuthActions.initComplete()));
@@ -135,12 +132,9 @@ export class AuthEpics {
         return (action$, store) => action$
             .ofType(AuthActionTypes.Logout)
             .switchMap((action: ReduxAction) => {
-                this.storage.set(this.KeyExpiry, null);
-                return Observable.fromPromise(
-                    this.storage.set(this.KeyIdToken, null)
-                )
-                    .map(() => AuthActions.logoutComplete())
-                    .catch(err => of(AuthActions.logoutComplete(err)))
+                localStorage.setItem(AuthEpics.KeyExpiry, null);
+                localStorage.setItem(AuthEpics.KeyIdToken, null);
+                return of(AuthActions.logoutComplete());
             })
     }
 
@@ -154,24 +148,14 @@ export class AuthEpics {
 
     private saveToken({ expiresIn, idToken }) {
         const expiresAt = JSON.stringify((expiresIn * 1000) + new Date().getTime());
-        this.storage.set(this.KeyExpiry, expiresAt);
-        this.storage.set(this.KeyIdToken, idToken);
+        localStorage.setItem(AuthEpics.KeyExpiry, expiresAt);
+        localStorage.setItem(AuthEpics.KeyIdToken, idToken);
     }
 
     private getToken() {
-        return new Promise((resolve, reject) => {
-            this.storage.get(this.KeyExpiry)
-                .then(expiresAt => {
-                    if (new Date().getTime() < JSON.parse(expiresAt))
-                        this.storage.get(this.KeyIdToken).then(token => {
-                            resolve(token);
-                        }, err => {
-                            reject(err);
-                        });
-                    else {
-                        resolve(false);
-                    }
-                }, err => reject(err))
-        });
+        const expiresAt = localStorage.getItem(AuthEpics.KeyExpiry);
+        if (new Date().getTime() < JSON.parse(expiresAt))
+            return localStorage.getItem(AuthEpics.KeyIdToken)
+        return false;
     }
 }

@@ -1,17 +1,32 @@
-import { ActionSheetController } from 'ionic-angular';
-import { Component, Input, OnInit } from '@angular/core';
-import { ControlValueAccessor } from '@angular/forms';
-import { PictureSourceType, EncodingType, CameraOptions, Camera } from '@ionic-native/camera';
+import { Component, EventEmitter, forwardRef, Input, OnInit, Output } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { Camera, CameraOptions, EncodingType, PictureSourceType } from '@ionic-native/camera';
+import { ActionSheetController, ToastController } from 'ionic-angular';
+
+import { Media } from '../../../client-lib';
+import { Uploader } from '../uploader';
 
 @Component({
   selector: 'photo-uploader',
-  templateUrl: 'photo-uploader.html'
+  templateUrl: 'photo-uploader.html',
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => PhotoUploaderComponent),
+      multi: true,
+    }
+  ]
 })
 export class PhotoUploaderComponent implements ControlValueAccessor, OnInit {
 
   @Input() pictureOpt: CameraOptions;
+  @Input() filename: string;
+  @Input() data: any;
 
-  selectedImage: {};
+  @Output('photoChanged') public photoChanged: EventEmitter<Media> = new EventEmitter<Media>();
+
+  isUploading: boolean = false;
+  currentImage: Media;
   public onChange: any = Function.prototype;
   public onTouched: any = Function.prototype;
 
@@ -27,7 +42,9 @@ export class PhotoUploaderComponent implements ControlValueAccessor, OnInit {
 
   constructor(
     private actionSheetCtrl: ActionSheetController,
-    private cameraSvc: Camera
+    private cameraSvc: Camera,
+    private uploader: Uploader,
+    private toastCtrl: ToastController
   ) {
   }
 
@@ -40,9 +57,9 @@ export class PhotoUploaderComponent implements ControlValueAccessor, OnInit {
   }
 
   /** ControlValueAccessor implementation. */
-  writeValue(value: number): void {
+  writeValue(value: Media): void {
     if (value != null) {
-      this.selectedImage = value
+      this.currentImage = value
     }
   }
 
@@ -57,6 +74,14 @@ export class PhotoUploaderComponent implements ControlValueAccessor, OnInit {
   }
 
   takePhoto() {
+    if (this.isUploading) {
+      this.toastCtrl.create({
+        message: 'Busy! Uploading an image.',
+        duration: 2000
+      }).present();
+      return;
+    }
+
     //ask where the photo is coming from
     let actionSheet = this.actionSheetCtrl.create({
       title: 'Upload picture',
@@ -85,8 +110,31 @@ export class PhotoUploaderComponent implements ControlValueAccessor, OnInit {
   }
 
   capturePhoto() {
-    this.cameraSvc.getPicture(this.pictureOpt).then(img=>{
-      console.log(img);
+    this.cameraSvc.getPicture(this.pictureOpt).then(filePath => {
+      this.isUploading = true;
+      this.uploader.uploadPhoto(
+        filePath,
+        {
+          filename: this.filename || 'image.jpeg',
+          contentType: 'image/jpeg',
+          data: this.data || {}
+        }
+      ).subscribe((data) => {
+        this.currentImage = data;
+        this.onChange(this.currentImage);
+        this.photoChanged.emit(this.currentImage);
+        this.isUploading = false;
+        this.toastCtrl.create({
+          message: 'Awesome! Photo uploaded successfully.',
+          duration: 2000
+        }).present();
+      }, (err) => {
+        this.isUploading = false;
+        this.toastCtrl.create({
+          message: 'Oh no, something went wrong. Try again!',
+          duration: 2000
+        }).present();
+      })
     })
   }
 

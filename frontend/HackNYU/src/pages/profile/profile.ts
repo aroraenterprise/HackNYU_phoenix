@@ -26,7 +26,7 @@ export class ProfilePage {
   }
 
   ionViewDidLoad() {
-    this.edit();
+    // this.edit();
   }
 
   settings() {

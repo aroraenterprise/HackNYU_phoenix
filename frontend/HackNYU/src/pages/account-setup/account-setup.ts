@@ -58,7 +58,7 @@ export class AccountSetupPage {
         }
       ], [Validators.email]),
       'nickname': new AkFormControl(null, [], []),
-      'picture': new AkFormControl(null, [], []),
+      'picture': new AkFormControl({}, [], []),
     })
   }
 

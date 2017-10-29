@@ -5,11 +5,10 @@
 </ion-header>
 
 
-<ion-content padding>
-  <div class="form-wrapper">
-    
-    <form [formGroup]="form">
-      <photo-uploader></photo-uploader>
+<ion-content>
+  <form [formGroup]="form">
+    <photo-uploader formControlName="picture" filename="profile_pic.jpeg" [data]="{alt: 'Profile picture'}"></photo-uploader>
+    <div class="form-wrapper" padding>
       <ion-item>
         <ion-label stacked>Name</ion-label>
         <ion-input type="text" formControlName="name"></ion-input>
@@ -26,12 +25,8 @@
         <ion-input type="email" formControlName="email"></ion-input>
       </ion-item>
       <ak-form-error [form]="form" control="email"></ak-form-error>
-
-      <!-- <div *ngIf="auth.error">
-        <p class="form-error">{{auth.error.message}}</p>
-      </div> -->
-    </form>
-  </div>
+    </div>
+  </form>
 </ion-content>
 <ion-footer>
   <button no-margin block ion-button large [disabled]="accountLoading$ | async" (click)="updateAccount()">

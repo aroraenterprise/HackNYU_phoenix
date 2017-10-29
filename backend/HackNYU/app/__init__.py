@@ -44,6 +44,8 @@ app_ns = Namespace('App', path='/app', description='App details')
 import resources
 
 from account import account_ns
+from media import media_ns
 
 api.add_namespace(app_ns)
 api.add_namespace(account_ns)
+api.add_namespace(media_ns)

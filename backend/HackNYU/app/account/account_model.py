@@ -20,5 +20,15 @@ class AccountModel(Model):
     name = ndb.StringProperty()
     email = ndb.StringProperty()
     nickname = ndb.StringProperty()
-    picture = ndb.StringProperty()
+    picture_key = ndb.KeyProperty(kind='MediaModel')
     show_setup = ndb.ComputedProperty(lambda x: x.name is None)
+
+    def __init__(self, *args, **kwds):
+        super(AccountModel, self).__init__(*args, **kwds)
+        self._cached_picture = None
+
+    @property
+    def picture(self):
+        if self.picture_key and not self._cached_picture:
+            self._cached_picture = self.picture_key.get()
+        return self._cached_picture

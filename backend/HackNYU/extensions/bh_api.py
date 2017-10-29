@@ -11,10 +11,12 @@ Author: sajarora
 Date: 2017-07-07
 Description:
 """
+import json
+
 from extensions.bh_swagger import BhSwagger
 from werkzeug.utils import cached_property
 
-from flask_restplus import Api
+from flask_restplus import Api, abort
 
 
 class BhApi(Api):
@@ -28,3 +30,7 @@ class BhApi(Api):
         if not self._schema:
             self._schema = BhSwagger(self).as_dict()
         return self._schema
+
+
+def bh_abort(code, errors, message=None):
+    abort(code, json.dumps({"errors": errors if isinstance(errors, list) else [errors], "message": message}))

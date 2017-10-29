@@ -1,6 +1,4 @@
 // http://ionicframework.com/docs/theming/
-
-
 // App Global Sass
 // --------------------------------------------------
 // Put style rules here that you want to apply globally. These
@@ -19,13 +17,11 @@
     padding-right: 0;
 }
 
-button {
-    .spinner {
-        margin-left: -16px;
-        margin-right: 16px;
-        &.light * {
-            stroke: color($colors, light) !important; // fill: color($colors, light) !important;
-        }
+.spinner {
+    margin-left: -16px;
+    margin-right: 16px;
+    &.light * {
+        stroke: color($colors, light) !important; // fill: color($colors, light) !important;
     }
 }
 

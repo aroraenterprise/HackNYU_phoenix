@@ -19,7 +19,7 @@ from model import Model
 
 
 class CreatorModel(Model):
-    creatorKey = ndb.KeyProperty(required=True)
+    creator_key = ndb.KeyProperty(required=True)
 
     def __init__(self, *args, **kwds):
         super(CreatorModel, self).__init__(*args, **kwds)
@@ -28,10 +28,10 @@ class CreatorModel(Model):
     @property
     def creator(self):
         if not self._cacheCreator:
-            self._cacheCreator = self.creatorKey.get()
+            self._cacheCreator = self.creator_key.get()
         return self._cacheCreator
 
     def _pre_put_hook(self):
-        if not self.creatorKey:
+        if not self.creator_key:
             logging.error("Model does not have a creator: %s" % str(self.__dict__))
             abort(500, "Invalid model.")
