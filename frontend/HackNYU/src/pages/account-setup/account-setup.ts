@@ -36,7 +36,7 @@ export class AccountSetupPage {
     })
   }
 
-  ionvViewDidUnload(){
+  ionViewDidUnload(){
     if (this.sub){
       this.sub.unsubscribe();
       this.sub = null;
@@ -45,20 +45,20 @@ export class AccountSetupPage {
 
   private setupForm(){
     this.form = new AkFormGroup({
-      'name': new AkFormControl(null, [
+      'name': new AkFormControl('saj', [
         {
           key: 'required',
           message: 'Please enter your full name'
         }
       ], [Validators.required]),
-      'email': new AkFormControl(null, [
+      'email': new AkFormControl('saj.arora24@gmail.com', [
         {
           key: 'email',
           message: 'Invalid email address'
         }
       ], [Validators.email]),
       'nickname': new AkFormControl(null, [], []),
-      'picture': new AkFormControl({}, [], []),
+      'picture': new AkFormControl(null, [], []),
     })
   }
 

@@ -45,8 +45,7 @@
 
   <div padding>
     <div *ngFor="let item of content">
-      <h2>{{item.title}}</h2>
-      <div [innerHtml]="item.html"></div>
+      <markdown-html [content]="item.text"></markdown-html>
     </div>
 
     

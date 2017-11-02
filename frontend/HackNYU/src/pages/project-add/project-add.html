@@ -1,0 +1,27 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>ProjectAdd</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <form [formGroup]="form">
+    <ion-item>
+      <ion-label stacked>Name</ion-label>
+      <ion-input type="text" formControlName="name"></ion-input>
+    </ion-item>
+    <ak-form-error [form]="form" control="name"></ak-form-error>
+
+    <ion-item>
+      <ion-label stacked>Short Description <ak-form-length [form]="form" control="short" maxLength="120"></ak-form-length></ion-label>
+      <ion-textarea rows="2" type="text" formControlName="short"></ion-textarea>
+    </ion-item>
+    <ak-form-error [form]="form" control="short"></ak-form-error>
+  </form>
+</ion-content>
+<ion-footer no-border>
+  <button ion-button block large no-margin (click)="save()">Create Project</button>
+</ion-footer>

@@ -1,6 +1,7 @@
+import { SectionHeaders } from './section-headers';
 import { TextEditorPage } from '../text-editor/text-editor';
 import { Component } from '@angular/core';
-import { IonicPage, ModalController, NavController, NavParams } from 'ionic-angular';
+import { AlertController, IonicPage, ModalController, NavController, NavParams } from 'ionic-angular';
 
 
 
@@ -22,27 +23,21 @@ export class ProjectViewPage {
   editMode: boolean = true;
 
   content = [
-    {
-      title: 'Inspiration',
-      html: `<p>When it comes to Cerebral Palsy and other potential diseases that causes immobility and speech impediments, the options
-      that are available to give someone voice are often expensive and out of reach for many. Because of this, people with
-      this condition have often had to rely on head mounted lasers, a print out, and the assistance of others to speak their
-      voice. We wanted to change this and provide a low cost option that would turn voice to vision- thus introducing VOICE[H]OVER.
-      </p>
-    `
-    }
+
   ]
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    public modalCtrl: ModalController
+    public modalCtrl: ModalController,
+    public alertCtrl: AlertController
   ) {
 
   }
 
   ionViewDidLoad() {
     // this.addText();
+
   }
 
   toggleEditMode(val: boolean) {
@@ -50,11 +45,7 @@ export class ProjectViewPage {
   }
 
   addText() {
-    const modal = this.modalCtrl.create(TextEditorPage);
-    modal.onDidDismiss(data=>{
-      console.log(data);
-    })
-    modal.present()
+    this.textHelper();
   }
 
   addPhoto() {
@@ -63,5 +54,45 @@ export class ProjectViewPage {
 
   addVideo() {
 
+  }
+
+  openTextEditorModal(title?: string) {
+    const modal = this.modalCtrl.create(
+      TextEditorPage,
+      { text: title ? `# ${title}\n\n` : '' }
+    );
+    modal.onDidDismiss(data => {
+      if (data)
+        this.content.push({ text: data.text })
+    })
+    modal.present()
+  }
+
+  textHelper() {
+    let alert = this.alertCtrl.create({
+      title: 'Section Helper',
+      message: 'Pick a section header below to get started.',
+      inputs: SectionHeaders.map(el => {
+        return {
+          type: 'radio',
+          label: el,
+          value: el
+        }
+      }),
+      buttons: [
+        {
+          text: 'Custom Section',
+          handler: () => {
+            this.openTextEditorModal();
+          }
+        },
+        {
+          text: 'Select',
+          handler: (data) => {
+            this.openTextEditorModal(data);
+          }
+        }
+      ]
+    }).present();
   }
 }

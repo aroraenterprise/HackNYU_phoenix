@@ -16,6 +16,7 @@ import { getAuth } from '../store/selectors/auth.selectors';
 })
 export class MyApp {
   rootPage: any = LoginPage;
+  setupShown: boolean = false;
   isLoggedIn: boolean = false;
 
   @ViewChild(Nav) nav: Nav;
@@ -37,9 +38,11 @@ export class MyApp {
         if (!auth.account) {
           this.isLoggedIn = false;
           this.nav.setRoot(LoginPage);
+        } else if (auth.account.showSetup) {
+          this.nav.setRoot(AccountSetupPage);
         } else if (!this.isLoggedIn) {
           this.isLoggedIn = true;
-          this.nav.setRoot(auth.account.showSetup ? AccountSetupPage : TabsPage);
+          this.nav.setRoot(TabsPage);
         }
       })
     });

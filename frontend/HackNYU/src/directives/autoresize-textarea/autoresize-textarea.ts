@@ -20,7 +20,7 @@ export class AutoresizeTextareaDirective implements OnInit {
     this.adjust();
   }
 
-  private adjust() {
+  public adjust() {
     let ta = this.el.nativeElement.querySelector('textarea');
     if (ta) {
       ta.style.overflow = 'hidden';

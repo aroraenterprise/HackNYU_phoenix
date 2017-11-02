@@ -1,5 +1,6 @@
+import { ProjectAddPage } from '../project-add/project-add';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, ModalController, NavController, NavParams } from 'ionic-angular';
 
 import { ProjectViewPage } from '../project-view/project-view';
 
@@ -21,15 +22,24 @@ export class ProjectsListPage {
     }
   ]
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(
+    public navCtrl: NavController, 
+    public navParams: NavParams,
+    public modalCtrl: ModalController
+  ) {
   }
 
   ionViewDidLoad() {
-    this.viewProject();
+    // this.viewProject();
+    this.addProject();
   }
 
   viewProject(){
     this.navCtrl.push(ProjectViewPage);
+  }
+
+  addProject(){
+    this.modalCtrl.create(ProjectAddPage).present();
   }
 
 }

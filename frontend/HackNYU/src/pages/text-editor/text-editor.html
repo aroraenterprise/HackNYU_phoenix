@@ -6,6 +6,11 @@
       </button>
     </ion-buttons>
     <ion-title>Text Editor</ion-title>
+    <ion-buttons right>
+      <button ion-button icon-left (click)="save()">
+        <ion-icon name="checkmark"></ion-icon> Save
+      </button>
+    </ion-buttons>
   </ion-navbar>
   <ion-toolbar class="segment-toolbar" color="primary" no-padding>
     <ion-segment [(ngModel)]="selectedTab" color="light">

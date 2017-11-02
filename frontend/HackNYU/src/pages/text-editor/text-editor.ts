@@ -1,5 +1,6 @@
+import { AutoresizeTextareaDirective } from '../../directives/autoresize-textarea/autoresize-textarea';
 import { FormControl } from '@angular/forms';
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { AlertController, IonicPage, NavParams, ViewController } from 'ionic-angular';
 import marked from 'marked';
 
@@ -13,6 +14,7 @@ export class TextEditorPage {
   markdownText: FormControl;
   previewHtml: string;
   forceLeave: boolean = false;
+  @ViewChild(AutoresizeTextareaDirective) autoresize;
 
   readonly Tabs = {
     Markdown: 'markdown',
@@ -26,12 +28,11 @@ export class TextEditorPage {
     public alertCtrl: AlertController
   ) {
     this.markdownText = new FormControl();
-    this.markdownText.patchValue(`Hello world`)
-    this.markdownText.markAsDirty();
+    this.markdownText.patchValue(navParams.data ? navParams.data.text : '');
   }
 
   ionViewDidLoad() {
-
+    this.autoresize.adjust();
   }
 
   dismiss() {
@@ -39,6 +40,7 @@ export class TextEditorPage {
   }
 
   save() {
+    this.forceLeave = true;
     this.viewCtrl.dismiss({ 
       text: this.markdownText.value 
     });
@@ -61,7 +63,6 @@ export class TextEditorPage {
           {
             text: 'Save',
             handler: () => {
-              this.forceLeave = true;
               this.save();
             }
           }

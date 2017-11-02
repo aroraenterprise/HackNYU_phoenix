@@ -8,6 +8,11 @@
 
 
 <ion-content>
+  <ion-fab bottom right>
+    <button ion-fab color="primary" (click)="addProject()" icon-only>
+      <ion-icon name="add"></ion-icon>
+    </button>
+  </ion-fab>
   <ion-card *ngFor="let item of projects" (click)="viewProject(item)">
     <img [src]="item.featuredImage?.url" />
     <div class="content" padding>

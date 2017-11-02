@@ -9,6 +9,7 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { AccountSetupPageModule } from '../pages/account-setup/account-setup.module';
 import { LoginPageModule } from '../pages/login/login.module';
 import { ProfilePageModule } from '../pages/profile/profile.module';
+import { ProjectAddPageModule } from '../pages/project-add/project-add.module';
 import { ProjectViewPageModule } from '../pages/project-view/project-view.module';
 import { ProjectsListPageModule } from '../pages/projects-list/projects-list.module';
 import { SettingsPageModule } from '../pages/settings/settings.module';
@@ -25,7 +26,8 @@ const Pages = [
   ProfilePageModule,
   SettingsPageModule,
   AccountSetupPageModule,
-  TextEditorPageModule
+  TextEditorPageModule,
+  ProjectAddPageModule
 ]
 
 @NgModule({

@@ -10,7 +10,7 @@ import { appReducer } from './app.reducer';
 import { AppState } from './app.state';
 import { AuthEpics } from './auth/auth.epics';
 import { ConfigFactory } from './config-factory';
-
+import { ProjectEpics } from './project/project.epics';
 
 
 const Providers = [
@@ -19,7 +19,8 @@ const Providers = [
         useValue: environment.backendUrl
     },
     AppEpics,
-    AuthEpics
+    AuthEpics,
+    ProjectEpics
 ]
 
 @NgModule({

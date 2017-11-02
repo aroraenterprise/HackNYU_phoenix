@@ -28,7 +28,7 @@ def update(
 
     # parse picture key if one is present
     picture_key = None
-    if picture:
+    if picture and picture.get('id'):
         picture_key = ndb.Key('MediaModel', picture.get('id'))
 
     account.populate(**{

@@ -11,7 +11,7 @@ export function sanitizeData(data) {
             let resultData = null;
             if (Array.isArray(data[key])) {
                 resultData = sanitizeData(data[key]);
-            } else if (typeof (data[key]) == 'object') {
+            } else if (typeof (data[key]) == 'object' && data[key] && Object.keys(data[key]).length > 0) {
                 resultData = sanitizeData(data[key]);
             } else if (data[key]) {
                 resultData = data[key]
