@@ -13,11 +13,7 @@
       <ion-icon name="add"></ion-icon>
     </button>
   </ion-fab>
-  <ion-card *ngFor="let item of projects" (click)="viewProject(item)">
-    <img [src]="item.featuredImage?.url" />
-    <div class="content" padding>
-      <h2 class="card-title">{{item.name}}</h2>
-      <p class="card-subtitle">{{item.short}}</p>
-    </div>
-  </ion-card>
+  <project-item *ngFor="let id of (projects$ | async)?.itemIds" [projectId]="id"></project-item>
+
+  <ion-spinner *ngIf="(projects$ | async)?.loading"></ion-spinner>
 </ion-content>

@@ -40,6 +40,7 @@ export class ProjectAddPage {
       return;
     }
     ProjectActions.create(this.form.value);
+    this.dismiss();
   }
 
   private createForm(){

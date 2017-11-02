@@ -1,0 +1,7 @@
+<ion-card *ngIf="project$ | async; let item" (click)="onClickHandler(item)">
+  <img [src]="item.featuredImage?.url || 'https://devpost-challengepost.netdna-ssl.com/assets/defaults/thumbnail-placeholder-42bcab8d8178b413922ae2877d8b0868.gif'" />
+  <div class="content" padding>
+    <h2 class="card-title">{{item.name}}</h2>
+    <p class="card-subtitle">{{item.short}}</p>
+  </div>
+</ion-card>

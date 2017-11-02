@@ -1,3 +1,6 @@
+import { ProjectActions } from '../../store/project/project.actions';
+import { getProjects } from '../../store/selectors/project.selectors';
+import { NgRedux } from '@angular-redux/store';
 import { ProjectAddPage } from '../project-add/project-add';
 import { Component } from '@angular/core';
 import { IonicPage, ModalController, NavController, NavParams } from 'ionic-angular';
@@ -12,6 +15,8 @@ import { ProjectViewPage } from '../project-view/project-view';
 })
 export class ProjectsListPage {
 
+  projects$ = getProjects(this.redux, ['list']);
+
   projects = [
     {
       name: 'Voice[H]over',
@@ -25,13 +30,15 @@ export class ProjectsListPage {
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
-    public modalCtrl: ModalController
+    public modalCtrl: ModalController,
+    public redux: NgRedux<any>
   ) {
   }
 
   ionViewDidLoad() {
     // this.viewProject();
-    this.addProject();
+    // this.addProject();
+    ProjectActions.list()
   }
 
   viewProject(){

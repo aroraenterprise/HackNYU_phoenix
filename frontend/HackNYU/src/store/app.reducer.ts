@@ -1,3 +1,4 @@
+import { projectsReducer } from './project/project.reducer';
 import { navReducer } from './nav/nav.reducer';
 import { combineReducers } from 'redux';
 
@@ -6,5 +7,6 @@ import { authReducer } from './auth/auth.reducer';
 
 export const appReducer = combineReducers<AppState>({
     auth: authReducer,
-    nav: navReducer
+    nav: navReducer,
+    projects: projectsReducer
 })
