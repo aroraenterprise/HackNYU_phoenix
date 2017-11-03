@@ -13,7 +13,7 @@
       <ion-icon name="add"></ion-icon>
     </button>
   </ion-fab>
-  <project-item *ngFor="let id of (projects$ | async)?.itemIds" [projectId]="id"></project-item>
+  <project-item *ngFor="let id of (projects$ | async)?.itemIds" (onClick)="viewProject($event)" [projectId]="id"></project-item>
 
   <ion-spinner *ngIf="(projects$ | async)?.loading"></ion-spinner>
 </ion-content>

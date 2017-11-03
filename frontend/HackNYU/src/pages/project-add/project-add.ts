@@ -1,9 +1,13 @@
-import { ProjectActions } from '../../store/project/project.actions';
+import { Subscription } from 'rxjs/Rx';
+import { NgRedux } from '@angular-redux/store';
+import { Component } from '@angular/core';
 import { Validators } from '@angular/forms';
+import { IonicPage, NavParams, ViewController } from 'ionic-angular';
+
 import { AkFormControl } from '../../components/ak-form/models/ak-form-control';
 import { AkFormGroup } from '../../components/ak-form/models/ak-form-group';
-import { Component } from '@angular/core';
-import { IonicPage, NavParams, ViewController } from 'ionic-angular';
+import { ProjectActions } from '../../store/project/project.actions';
+import { getProjectCurrent } from '../../store/selectors/project.selectors';
 
 @IonicPage()
 @Component({
@@ -13,10 +17,15 @@ import { IonicPage, NavParams, ViewController } from 'ionic-angular';
 export class ProjectAddPage {
 
   form: AkFormGroup;
+  project$ = getProjectCurrent(this.redux);
+  project: { id?: string, loading?: boolean, error?: any }
+  sub: Subscription;
+  saving: boolean;
 
   constructor(
-    public viewCtrl: ViewController, 
-    public navParams: NavParams
+    public viewCtrl: ViewController,
+    public navParams: NavParams,
+    public redux: NgRedux<any>
   ) {
     this.createForm();
     this.form.patchValue({
@@ -26,24 +35,42 @@ export class ProjectAddPage {
   }
 
   ionViewDidLoad() {
-    
+    if (!this.sub) {
+      this.sub = this.project$.subscribe(data => {
+        this.project = data;
+        if (this.project) {
+          if (this.saving && this.project.id) {
+            this.dismiss({ id: data.id });
+          } else if (this.project.error) {
+            this.saving = false;
+            console.log(data.error);
+          }
+        }
+      })
+    }
   }
 
-  dismiss(){
-    this.viewCtrl.dismiss();
+  ionViewDidUnload() {
+    if (this.sub) {
+      this.sub.unsubscribe();
+      this.sub = null;
+    }
   }
 
-  save(){
-    // this.viewCtrl.dismiss();
+  dismiss(data?: any) {
+    this.viewCtrl.dismiss(data);
+  }
+
+  save() {
     if (!this.form.valid) {
       this.form.setShowError(true);
       return;
     }
+    this.saving = true;
     ProjectActions.create(this.form.value);
-    this.dismiss();
   }
 
-  private createForm(){
+  private createForm() {
     this.form = new AkFormGroup({
       'name': new AkFormControl(null, [
         {

@@ -1,12 +1,14 @@
 import { ReduxAction } from '../redux-action';
-import { Project } from '../../client-lib';
+import { Project, ProjectParam } from '../../client-lib';
 import { dispatch } from '@angular-redux/store/lib/src/decorators/dispatch';
 
 export const ProjectActionTypes = {
     Create: 'Project_Create',
     CreateComplete: 'Project_Create_Complete',
     List: 'Project_List',
-    ListComplete: 'Project_List_Complete'
+    ListComplete: 'Project_List_Complete',
+    Update: 'Project_Update',
+    UpdateComplete: 'Project_Update_Complete'
 }
 
 export class ProjectActions {
@@ -33,10 +35,23 @@ export class ProjectActions {
         meta: { next: next }
     })
 
-    static listComplete = ({data, meta}, err?: any): ReduxAction => ({
+    static listComplete = ({ data, meta }, err?: any): ReduxAction => ({
         type: ProjectActionTypes.ListComplete,
         payload: data,
         meta: meta,
+        error: err,
+        hasError: err != null
+    })
+
+    @dispatch()
+    static update = (project: Project): ReduxAction => ({
+        type: ProjectActionTypes.Update,
+        payload: { id: project.id, project: project }
+    })
+
+    static updateComplete = (project?: Project, err?: any): ReduxAction => ({
+        type: ProjectActionTypes.UpdateComplete,
+        payload: project,
         error: err,
         hasError: err != null
     })

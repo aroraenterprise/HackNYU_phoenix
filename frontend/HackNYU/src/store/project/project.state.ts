@@ -1,8 +1,9 @@
 import { PaginationState } from '../pagination/pagination.state';
 export interface ProjectState {
-    currentProject?: {
-        id: number,
-        loading?: boolean
+    current?: {
+        id?: number,
+        loading?: boolean,
+        error?: any
     },
     byId?: {[key: number]: {}},
     list?: PaginationState

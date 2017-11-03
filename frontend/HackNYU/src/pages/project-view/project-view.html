@@ -1,7 +1,12 @@
 <ion-header>
 
   <ion-navbar color="primary">
-    <ion-title>Voice[H]over</ion-title>
+    <ion-title>{{project?.name}}</ion-title>
+    <ion-buttons right>
+      <button ion-button clear (click)="toggleEditMode()">
+        Edit
+      </button>
+    </ion-buttons>
   </ion-navbar>
   <ion-toolbar class="segment-toolbar" color="primary" no-padding>
     <ion-segment [(ngModel)]="selectedTab" color="light">
@@ -31,25 +36,19 @@
     </ion-fab-list>
   </ion-fab>
 
-  <ion-slides [autoplay]="slidesOpt.autoplay" [pager]="true" [loop]="slidesOpt.loop">
-    <ion-slide>
-      <img src="https://static1.squarespace.com/static/575b7e4b27d4bd874f36c608/5914471246c3c457b1a5809e/5914497620099e447593093c/1494501872901/img_0394-260.jpg?format=750w">
-    </ion-slide>
-    <ion-slide>
-      <img src="https://static1.squarespace.com/static/575b7e4b27d4bd874f36c608/5914471246c3c457b1a5809e/591447169de4bb5c37d307aa/1494501240686/Screen+Shot+2017-05-11+at+7.10.46+PM.png?format=750w">
-    </ion-slide>
-    <ion-slide>
-      <img src="https://static1.squarespace.com/static/575b7e4b27d4bd874f36c608/5914471246c3c457b1a5809e/591448e36a49634ba55d0a35/1494501779075/unnamed-1.jpg?format=750w">
+  <ion-slides *ngIf="slidesOpt.slides.length > 0" [autoplay]="slidesOpt.autoplay" [pager]="true" [loop]="slidesOpt.loop">
+    <ion-slide *ngFor="let item of slidesOpt.slides">
+      <img [src]="item">
     </ion-slide>
   </ion-slides>
 
   <div padding>
-    <div *ngFor="let item of content">
+    <div *ngFor="let item of project?.content">
       <markdown-html [content]="item.text"></markdown-html>
     </div>
 
-    
-<!-- 
+
+    <!-- 
     <h2>What it does</h2>
 
     <p>VOICE[H]OVER works much like the head mounted laser and print out, but is notably different because of its ability to

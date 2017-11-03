@@ -1,7 +1,7 @@
-import { Project } from '../../client-lib';
 import { NgRedux } from '@angular-redux/store';
 import { Observable } from 'rxjs/Rx';
 
+import { Project } from '../../client-lib';
 import { AppState } from '../app.state';
 
 
@@ -13,4 +13,8 @@ export function getProjects<T>(redux: NgRedux<AppState>, keys: string[] = []): O
 
 export function getProjectById(redux: NgRedux<AppState>, id: string): Observable<Project>{
     return redux.select(['projects', 'byId', id]);
+}
+
+export function getProjectCurrent(redux: NgRedux<AppState>): Observable<any> {
+    return redux.select(['projects', 'current'])
 }

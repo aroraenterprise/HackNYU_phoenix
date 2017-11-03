@@ -1,3 +1,4 @@
+import { PaginationState } from '../../store/pagination/pagination.state';
 import { ProjectActions } from '../../store/project/project.actions';
 import { getProjects } from '../../store/selectors/project.selectors';
 import { NgRedux } from '@angular-redux/store';
@@ -15,20 +16,10 @@ import { ProjectViewPage } from '../project-view/project-view';
 })
 export class ProjectsListPage {
 
-  projects$ = getProjects(this.redux, ['list']);
-
-  projects = [
-    {
-      name: 'Voice[H]over',
-      short: 'VOICE[H]OVER is open sourced assistive tech, created to aid people who are unable to move or speak talk.',
-      featuredImage: {
-        url: 'https://static1.squarespace.com/static/575b7e4b27d4bd874f36c608/5914471246c3c457b1a5809e/5914475aa5790aa528253925/1494501287442/Screen+Shot+2017-05-11+at+7.08.13+PM.png?format=750w'
-      }
-    }
-  ]
+  projects$ = getProjects<PaginationState>(this.redux, ['list']);
 
   constructor(
-    public navCtrl: NavController, 
+    public navCtrl: NavController,
     public navParams: NavParams,
     public modalCtrl: ModalController,
     public redux: NgRedux<any>
@@ -36,17 +27,26 @@ export class ProjectsListPage {
   }
 
   ionViewDidLoad() {
-    // this.viewProject();
-    // this.addProject();
+    this.projects$.subscribe(data => {
+      if (data && data.itemIds) {
+        this.viewProject({ id: data.itemIds[0].toString() });
+      }
+    })
     ProjectActions.list()
   }
 
-  viewProject(){
-    this.navCtrl.push(ProjectViewPage);
+  viewProject({ id }) {
+    this.navCtrl.push(ProjectViewPage, { projectId: id });
   }
 
-  addProject(){
-    this.modalCtrl.create(ProjectAddPage).present();
+  addProject() {
+    let modal = this.modalCtrl.create(ProjectAddPage);
+    modal.onDidDismiss(data => {
+      if (data && data.id) {
+        this.navCtrl.push(ProjectViewPage, { projectId: data.id })
+      }
+    })
+    modal.present();
   }
 
 }

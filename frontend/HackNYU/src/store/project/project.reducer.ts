@@ -41,17 +41,39 @@ export function projectsReducer(state: ProjectState = ProjectInitialState, actio
                 }
             }
         }
-        case ProjectActionTypes.CreateComplete: {
-            let currentList = Object.assign({}, state.list);
-            currentList.itemIds = currentList.itemIds || [];
-            currentList.itemIds.splice(0, 0, action.payload.id);
+        case ProjectActionTypes.Create: {
             return {
                 ...state,
-                byId: {
-                    ...state.byId,
-                    [action.payload.id]: action.payload
-                },
-                list: currentList
+                current: {
+                    loading: true
+                }
+            }
+        }
+        case ProjectActionTypes.CreateComplete: {
+            if (action.hasError) {
+                return {
+                    ...state,
+                    current: {
+                        loading: false,
+                        error: action.error
+                    }
+                }
+            } else {
+                let currentList = Object.assign({}, state.list);
+                currentList.itemIds = currentList.itemIds || [];
+                currentList.itemIds.splice(0, 0, action.payload.id);
+                return {
+                    ...state,
+                    current: {
+                        id: action.payload.id,
+                        loading: false
+                    },
+                    byId: {
+                        ...state.byId,
+                        [action.payload.id]: action.payload
+                    },
+                    list: currentList
+                }
             }
         }
     }

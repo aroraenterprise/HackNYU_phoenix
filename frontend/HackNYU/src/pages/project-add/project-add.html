@@ -23,5 +23,7 @@
   </form>
 </ion-content>
 <ion-footer no-border>
-  <button ion-button block large no-margin (click)="save()">Create Project</button>
+  <button ion-button block large no-margin (click)="save()" [disabled]="project?.loading"> 
+    <ion-spinner class="light" *ngIf="project?.loading"></ion-spinner>
+    Create Project</button>
 </ion-footer>

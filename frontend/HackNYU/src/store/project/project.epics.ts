@@ -21,6 +21,7 @@ export class ProjectEpics {
     build() {
         return [
             createEpicMiddleware(this.createEpic()),
+            createEpicMiddleware(this.updateEpic()),
             createEpicMiddleware(this.listEpic()),
         ]
     }
@@ -32,6 +33,17 @@ export class ProjectEpics {
                 return this.projectSvc.create(action.payload)
                     .map(project => ProjectActions.createComplete(project))
                     .catch(err => of(ProjectActions.createComplete(null, err)));
+            });
+    }
+
+
+    private updateEpic(): Epic<ReduxAction, AppState> {
+        return (action$, store) => action$
+            .ofType(ProjectActionTypes.Update)
+            .switchMap(action => {
+                return this.projectSvc.update(action.payload.id, action.payload.project)
+                    .map(project => ProjectActions.updateComplete(project))
+                    .catch(err => of(ProjectActions.updateComplete(null, err)));
             });
     }
 
